@@ -1,0 +1,1 @@
+//This was me trying to use ODBC for the project. Don't think C++ is the language for DB-Connections. 
