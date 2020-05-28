@@ -1,15 +1,16 @@
 #pragma once
 #include <iostream>
+#include "Publications.h"
 
-class Customer
+class Customer:
+	public Publications
 {
 public:
-	Customer();
+	Customer(std::string username, std::string password);
 	~Customer();
 private:
-	int m_ID;
-	std::string m_UserName;
-	std::string m_Password;
+	using Publications::m_username;
+	using Publications::m_password;
 
 
 

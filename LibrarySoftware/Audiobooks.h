@@ -12,7 +12,7 @@ public:
 	using Publications::m_ID;
 
 private:
-	std::string m_author;
-	std::string m_title;
+	using Publications::m_author;
+	using Publications::m_title;
 };
 
