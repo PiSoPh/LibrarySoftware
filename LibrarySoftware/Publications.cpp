@@ -26,17 +26,17 @@ Publications::~Publications()
 void Publications::fillLib()
 {
 	//Add Books to library
-	m_books.push_back(new Books("Newt Scamander", "All you need to know about keeping Sentient Stick-Bugs", 1));
-	m_books.push_back(new Books("All Might", "Go Beyond Plus Ultra", 2));
+	m_books.push_back(new Books("Newt Scamander", "All you need to know about keeping Sentient Stick-Bugs", 1, 2));
+	m_books.push_back(new Books("All Might", "Go Beyond Plus Ultra", 2, 1));
 	
 
 	//Add Computergames to library
-	m_computergames.push_back(new Computergames("EA", "Fifa 19", 1));
-	m_computergames.push_back(new Computergames("CD Project RED", "The Witcher 3: Wild Hunt", 2));
+	m_computergames.push_back(new Computergames("EA", "Fifa 19", 1, 5));
+	m_computergames.push_back(new Computergames("CD Project RED", "The Witcher 3: Wild Hunt", 2, 2));
 
 	//Add Audiobooks to library
-	m_audiobooks.push_back(new Audiobooks("Monkey D. Ruffy", "Navigating the World Seas A-Z", 1));
-	m_audiobooks.push_back(new Audiobooks("Donald Trump", "How to become the biggest Troll of them All - Read by the Master himself", 2));
+	m_audiobooks.push_back(new Audiobooks("Monkey D. Ruffy", "Navigating the World Seas A-Z", 1, 5));
+	m_audiobooks.push_back(new Audiobooks("Donald Trump", "How to become the biggest Troll of them All - Read by the Master himself", 2, 3));
 
 	//add an admin user to the program (mainly for testing purposes)
 	m_users.push_back(new Customer("admin", "youlose"));
@@ -47,8 +47,8 @@ void Publications::list(vector<Publications*> type)
 {
 	for (auto& i : type)
 	{
-		if(i->m_borrowed == false)
-		cout << "ID:" << i->m_ID << " " << i->m_author << " - " << i->m_title << endl;
+		if(i->m_borrowed == false && i->m_quantity != 0)
+		cout << "ID:" << i->m_ID << " " << i->m_author << " - " << i->m_title << " " << "Quantity: " << i->m_quantity << endl;
 	}
 }
 
@@ -80,6 +80,18 @@ void Publications::borrowItem(int borrowcount)
 	}
 }
 
+void Publications::returnItem()
+{
+	int iBuffer = 0;
+
+	cout << "Which item would you like to return? " << endl;
+	cout << "1. Book" << endl;
+	cout << "2. Audiobook" << endl;
+	cout << "3. Computergame" << endl;
+
+//folgt morgen
+}
+
 vector<Publications*> Publications::getVector(string type)
 {
 	if (type == "book")
@@ -108,7 +120,11 @@ void Publications::borrow(vector<Publications*> type)
 	{
 		if (iBuffer == i->m_ID)
 		{
-			i->m_borrowed = true;
+			i->m_quantity--;
+			if (i->m_quantity == 0)
+			{
+				i->m_borrowed = true;
+			}
 			cout << "You have successfully borrowed " << i->m_title << endl;
 		}
 	}

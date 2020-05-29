@@ -6,7 +6,7 @@ class Computergames :
 	public Publications
 {
 public:
-	Computergames(std::string author, std::string title, int ID);
+	Computergames(std::string author, std::string title, int ID, int quantity);
 	~Computergames();
 	using Publications::m_type;
 	using Publications::m_borrowed;
@@ -14,5 +14,6 @@ public:
 private:
 	using Publications::m_author;
 	using Publications::m_title;
+	using Publications::m_quantity;
 };
 

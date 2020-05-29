@@ -5,7 +5,7 @@ class Audiobooks:
 	public Publications
 {
 public:
-	Audiobooks(std::string author, std::string title, int ID);
+	Audiobooks(std::string author, std::string title, int ID, int quantity);
 	~Audiobooks();
 	using Publications::m_type;
 	using Publications::m_borrowed;
@@ -14,5 +14,6 @@ public:
 private:
 	using Publications::m_author;
 	using Publications::m_title;
+	using Publications::m_quantity;
 };
 

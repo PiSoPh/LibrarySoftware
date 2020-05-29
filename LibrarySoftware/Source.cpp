@@ -13,6 +13,7 @@ int main()
 	char chCustInputBuffer;
 	int iCustInputBuffer = 0;
 	bool wrongInput = false;
+	bool exit = false; //to skip out of the program prematurely
 	int roundcount = 0; //ensuring that menu is not listed everytime
 	int borrowCount = 0;
 
@@ -20,24 +21,56 @@ int main()
 	auto library = new Publications();
 	library->fillLib();
 
-	do
+	//Options that can be accessed without registration
+	while (iCustInputBuffer != 6 && iCustInputBuffer != 5)
 	{
-		cout << "Are you a returning customer? (y/n)" << endl;
-		cin >> chCustInputBuffer;
-		switch (chCustInputBuffer)
+		cout << "What would you like to do? " << endl;
+		if ((roundcount == 0) || iCustInputBuffer == 4)
 		{
-		case 'y': library->login();
-			break;
-		case 'n': library->createCustomer();
-			library->login();
-			break;
-		default: cout << "This is not a valid choice. Please choose between 'y' and 'n'." << endl;
-			wrongInput = true;
-			break;
+			cout << "1. List all books available " << endl;
+			cout << "2. List all Computer Games available " << endl;
+			cout << "3. List all Audiobooks available " << endl;
+			cout << "4. Menu" << endl;
+			cout << "5. Login" << endl;
+			cout << "6. Exit" << endl;
 		}
+		cin >> iCustInputBuffer;
 
-	} while (wrongInput == true);
+		switch (iCustInputBuffer)
+		{
+		case 1: library->list(library->getVector("book")); break;
+		case 2: library->list(library->getVector("computergame")); break;
+		case 3: library->list(library->getVector("audiobook")); break;
+		case 5: exit = false; break;
+		case 6: exit = true; break;
+		}
+		roundcount++;
 
+
+	}
+	roundcount = 0;
+	if (!exit)
+	{
+		do
+		{
+			cout << "Are you a returning customer? (y/n)" << endl; //Fehler in der Funktion, wenn String statt Char eingegeben wird ueberschreibt Prog Speicheradressen
+			cin >> chCustInputBuffer;
+			{
+				switch (chCustInputBuffer)
+				{
+				case 'y': library->login();
+					break;
+				case 'n': library->createCustomer();
+					library->login();
+					break;
+				default: cout << "This is not a valid choice. Please choose between 'y' and 'n'." << endl;
+					wrongInput = true;
+					break;
+				}
+			}
+
+		} while (wrongInput == true);
+	}
 	while ((library->loginSuccesfull == true) && iCustInputBuffer != 8)
 	{
 		cout << "What would you like to do? " << endl;
