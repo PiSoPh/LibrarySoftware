@@ -83,13 +83,39 @@ void Publications::borrowItem(int borrowcount)
 void Publications::returnItem()
 {
 	int iBuffer = 0;
-
 	cout << "Which item would you like to return? " << endl;
 	cout << "1. Book" << endl;
-	cout << "2. Audiobook" << endl;
-	cout << "3. Computergame" << endl;
+	cout << "2. Computergame" << endl;
+	cout << "3. Audiobook" << endl;
 
-//folgt morgen
+	cin >> iBuffer;
+
+	switch (iBuffer)
+	{
+	case 1: m_return(m_books);
+		break;
+	case 2: m_return(m_computergames);
+		break;
+	case 3: m_return(m_audiobooks);
+		break;
+	};
+
+}
+
+void Publications::adminFunct()
+{
+	cout << "Stuff borrowed:" << endl;
+	for (auto& x : m_stuff_borrowed)
+	{
+		cout << "ID:" << x->m_ID << " " << x->m_author << " - " << x->m_title << " " << "Quantity: " << x->m_quantity << endl;
+	}
+
+	cout << "Users:" << endl;
+	list(m_users);
+	for (auto& x : m_users)
+	{
+		cout << "Name:" << x->m_username << endl;
+	}
 }
 
 vector<Publications*> Publications::getVector(string type)
@@ -126,8 +152,44 @@ void Publications::borrow(vector<Publications*> type)
 				i->m_borrowed = true;
 			}
 			cout << "You have successfully borrowed " << i->m_title << endl;
+			m_stuff_borrowed.push_back(i);
 		}
 	}
+}
+
+void Publications::m_return(std::vector<Publications*> type)
+{
+	int iBuffer = 0;
+	int iCounter = 0;
+	bool validChoice;
+	if (m_stuff_borrowed.size() == 0)
+	{
+		cout << "Nothing to be returned at the moment" << endl;
+	}
+	else
+	{
+		cout << "Books IDs:" << endl;
+		list(m_stuff_borrowed); //lists all Publications currently borrowed.
+		cout << "Please choose by typing in the ID" << endl;
+		cin >> iBuffer;
+		for (auto& i : type)
+		{
+			if (iBuffer == i->m_ID)
+			{
+				i->m_quantity++;
+				cout << "You have successfully returned " << i->m_title << endl;
+			}
+			for (auto& j : m_stuff_borrowed)
+			{
+				iCounter++;
+				if (i->m_title == j->m_title)
+				{
+					m_stuff_borrowed.erase((m_stuff_borrowed.begin() + iCounter - 1)); //remove pointer from the vector without calling the objects destructor
+				}
+			}
+		}
+	}
+
 }
 
 bool Publications::login()
@@ -171,7 +233,7 @@ void Publications::createCustomer()
 			if (username == i->m_username)
 			{
 				cout << "Sorry, this username is taken." << endl;
-				usernameTaken == true;
+				usernameTaken == true; //sets flag in case username is taken
 			}
 			else
 			{
@@ -181,5 +243,11 @@ void Publications::createCustomer()
 		}
 
 	} while (usernameTaken == true);
+}
+
+bool Publications::logout() 
+{
+	loginSuccesfull = false;
+	return loginSuccesfull;
 }
 

@@ -18,12 +18,16 @@ public:
 	std::vector<Publications*> m_books; //Collection of all books
 	std::vector<Publications*> m_audiobooks; //Collection of all Audiobooks
 	std::vector<Publications*> m_computergames; //Collection of all Computergames
+	std::vector<Publications*> m_stuff_borrowed; //Vector of every item currently borrowed
 
 	//Variables for User Management:
 	bool loginSuccesfull;
 	std::vector<Publications*> m_users;
 	std::string m_username;
 	std::string m_password;
+	bool login(); //for returning customers
+	void createCustomer(); //for new customers
+	bool logout();
 
 
 	//Functions for Librarymanagement
@@ -31,15 +35,16 @@ public:
 	void list(std::vector<Publications*> type);
 	void borrowItem(int borrowcount); //called in main
 	void returnItem();
+	void adminFunct();
 	std::vector<Publications*> getVector(std::string type);
 
 private:
 	void borrow(std::vector<Publications*> type);
+	void m_return(std::vector<Publications*> type);
 
 public:
 	//Functions for Usermanagement
-	bool login(); //for returning customers
-	void createCustomer();
+
 
 
 };
