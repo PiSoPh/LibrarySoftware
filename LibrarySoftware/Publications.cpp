@@ -16,8 +16,27 @@ Publications::~Publications()
 {
 	for (auto& x : m_users)
 	{
+		cout << "User " << x->m_username << " has died in a library fire." << endl;
 		delete x;
-		cout << "User " << m_username << " deleted." << endl;
+	}
+	for (auto& z : m_audiobooks)
+	{
+		cout << "Audiobook \"" << z->m_title << "\" has burned to ashes in a library fire." << endl;
+		delete z;
+	}
+	for (auto& y : m_books)
+	{
+		cout << "Book \"" << y->m_title << "\" has burned to ashes in a library fire." << endl;
+		delete y;
+	}
+	for (auto& i : m_computergames)
+	{
+		cout << "Computergame \"" << i->m_title << "\" has burned to ashes in a library fire." << endl;
+		delete i;
+	}
+	for (auto& t : m_stuff_borrowed)
+	{
+		delete t;
 	}
 }
 
@@ -43,6 +62,7 @@ void Publications::fillLib()
 
 }
 
+//only lists publications currently not borrowed
 void Publications::list(vector<Publications*> type)
 {
 	for (auto& i : type)
@@ -52,6 +72,7 @@ void Publications::list(vector<Publications*> type)
 	}
 }
 
+//function called in main
 void Publications::borrowItem(int borrowcount)
 {
 	int iBuffer = 0; 
@@ -80,6 +101,7 @@ void Publications::borrowItem(int borrowcount)
 	}
 }
 
+//function called in main
 void Publications::returnItem()
 {
 	int iBuffer = 0;
@@ -102,7 +124,7 @@ void Publications::returnItem()
 
 }
 
-void Publications::adminFunct()
+void Publications::adminFunct() //function to check certain variables during runtime
 {
 	cout << "Stuff borrowed:" << endl;
 	for (auto& x : m_stuff_borrowed)
@@ -138,7 +160,7 @@ void Publications::borrow(vector<Publications*> type)
 {
 	int iBuffer = 0;
 	bool validChoice;
-	cout << "Books available:" << endl;
+	cout << "Publications available:" << endl;
 	list(type);
 	cout << "Please choose by typing in the ID" << endl;
 	cin >> iBuffer;

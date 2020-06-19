@@ -105,5 +105,8 @@ int main()
 		roundcount++;
 	}
 
+	//clear memory
+	library->~Publications();
+
 
 }
